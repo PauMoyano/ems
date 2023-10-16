@@ -6,6 +6,22 @@ dbSetup();
 
 const app = express();
 app.use(express.json());
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+  info: {
+    title: 'EMS docs',
+    version: '1.0.0',
+  },
+  },
+  apis: ["./routes/index.js"]
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/',swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
 
 app.use(router);
 
